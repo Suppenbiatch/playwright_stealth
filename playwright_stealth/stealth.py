@@ -136,12 +136,12 @@ class StealthConfig:
 
 
 def stealth_sync(ctx: SyncPage | SyncContext, config: StealthConfig = None):
-    """teaches synchronous playwright Page to be stealthy like a ninja!"""
+    """teaches synchronous playwright Page or Context to be stealthy like a ninja!"""
     for script in (config or StealthConfig()).enabled_scripts:
         ctx.add_init_script(script)
 
 
 async def stealth_async(ctx: AsyncPage | AsyncContext, config: StealthConfig = None):
-    """teaches asynchronous playwright Page to be stealthy like a ninja!"""
+    """teaches asynchronous playwright Page or Context to be stealthy like a ninja!"""
     for script in (config or StealthConfig()).enabled_scripts:
         await ctx.add_init_script(script)
