@@ -6,6 +6,8 @@ from typing import Tuple, Optional, Dict
 import pkg_resources
 from playwright.async_api import Page as AsyncPage
 from playwright.sync_api import Page as SyncPage
+from playwright.sync_api import BrowserContext as SyncContext
+from playwright.async_api import BrowserContext as AsyncContext
 
 
 def from_file(name):
@@ -133,13 +135,13 @@ class StealthConfig:
             yield SCRIPTS['webgl_vendor']
 
 
-def stealth_sync(page: SyncPage, config: StealthConfig = None):
+def stealth_sync(ctx: SyncPage | SyncContext, config: StealthConfig = None):
     """teaches synchronous playwright Page to be stealthy like a ninja!"""
     for script in (config or StealthConfig()).enabled_scripts:
-        page.add_init_script(script)
+        ctx.add_init_script(script)
 
 
-async def stealth_async(page: AsyncPage, config: StealthConfig = None):
+async def stealth_async(ctx: AsyncPage | AsyncContext, config: StealthConfig = None):
     """teaches asynchronous playwright Page to be stealthy like a ninja!"""
     for script in (config or StealthConfig()).enabled_scripts:
-        await page.add_init_script(script)
+        await ctx.add_init_script(script)
